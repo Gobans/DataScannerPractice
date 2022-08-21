@@ -13,7 +13,6 @@
 		917134FE28ACD5C0007BFD29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 917134FC28ACD5C0007BFD29 /* Main.storyboard */; };
 		9171350028ACD5C0007BFD29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 917134FF28ACD5C0007BFD29 /* Assets.xcassets */; };
 		9171350328ACD5C0007BFD29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9171350128ACD5C0007BFD29 /* LaunchScreen.storyboard */; };
-		9171350B28ACD756007BFD29 /* dataScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9171350A28ACD756007BFD29 /* dataScannerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,6 @@
 		917134FF28ACD5C0007BFD29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9171350228ACD5C0007BFD29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9171350428ACD5C0007BFD29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9171350A28ACD756007BFD29 /* dataScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataScannerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +59,6 @@
 				917134F628ACD5C0007BFD29 /* AppDelegate.swift */,
 				917134F828ACD5C0007BFD29 /* SceneDelegate.swift */,
 				917134FA28ACD5C0007BFD29 /* ViewController.swift */,
-				9171350A28ACD756007BFD29 /* dataScannerViewController.swift */,
 				917134FC28ACD5C0007BFD29 /* Main.storyboard */,
 				917134FF28ACD5C0007BFD29 /* Assets.xcassets */,
 				9171350128ACD5C0007BFD29 /* LaunchScreen.storyboard */,
@@ -142,7 +139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				917134FB28ACD5C0007BFD29 /* ViewController.swift in Sources */,
-				9171350B28ACD756007BFD29 /* dataScannerViewController.swift in Sources */,
 				917134F728ACD5C0007BFD29 /* AppDelegate.swift in Sources */,
 				917134F928ACD5C0007BFD29 /* SceneDelegate.swift in Sources */,
 			);

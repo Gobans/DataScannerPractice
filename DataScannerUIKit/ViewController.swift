@@ -9,6 +9,7 @@ import UIKit
 import VisionKit
 
 class ViewController: UIViewController {
+    let stringArray: [String] = []
     lazy var dataScannerController: DataScannerViewController = {
         let viewController =  DataScannerViewController(recognizedDataTypes: [.text()],qualityLevel: .accurate, recognizesMultipleItems: false, isHighFrameRateTrackingEnabled: false, isPinchToZoomEnabled: true, isGuidanceEnabled: true, isHighlightingEnabled: true)
         viewController.delegate = self
@@ -68,7 +69,8 @@ extension ViewController: DataScannerViewControllerDelegate {
     func dataScanner(_ dataScanner: DataScannerViewController, didTapOn item: RecognizedItem) {
         switch item {
         case .text(let text):
-            print(text.transcript)
+            print(text.transcript.split(separator: "\n"))
+//            print(text.transcript)
             catchText.text = text.transcript
         case .barcode(let barcode):
             print(barcode.payloadStringValue ?? "unkown")
@@ -78,8 +80,5 @@ extension ViewController: DataScannerViewControllerDelegate {
         }
         dataScanner.dismiss(animated: true)
         dataScanner.stopScanning()
-//        navigationController?.popViewController(animated: true)
-//        self.dataScannerController.stopScanning()
     }
 }
-
