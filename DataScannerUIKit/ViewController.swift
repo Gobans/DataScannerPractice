@@ -9,40 +9,30 @@ import UIKit
 import VisionKit
 
 class ViewController: UIViewController {
-    let stringArray: [String] = []
-    lazy var dataScannerController: DataScannerViewController = {
+    lazy var dataScannerViewController: DataScannerViewController = {
         let viewController =  DataScannerViewController(recognizedDataTypes: [.text()],qualityLevel: .accurate, recognizesMultipleItems: false, isHighFrameRateTrackingEnabled: false, isPinchToZoomEnabled: true, isGuidanceEnabled: true, isHighlightingEnabled: true)
         viewController.delegate = self
-        
-        viewController.view.addSubview(catchButton)
-        catchButton.addTarget(self, action: #selector(captureText), for: .touchUpInside)
-        catchButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            catchButton.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
-            catchButton.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor, constant: -100),
-            catchButton.widthAnchor.constraint(equalToConstant: 110),
-            catchButton.heightAnchor.constraint(equalToConstant: 60)
-        ])
         return viewController
     }()
-    lazy var scanButton: UIButton = {
+    
+    private let scanButton: UIButton = {
         let button = UIButton()
         button.setTitle("Start Scan", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.tintColor = .systemBlue
-        button.addTarget(self, action: #selector(startScanning), for: .touchUpInside)
         return button
     }()
-    lazy var catchButton: UIButton = {
+    
+    private let catchButton: UIButton = {
         let button = UIButton()
         button.configuration = .filled()
         button.setTitle("Catch", for: .normal)
-        button.addTarget(self, action: #selector(captureText), for: .touchUpInside)
         button.isUserInteractionEnabled = false
         button.configuration?.background.backgroundColor = .gray
         return button
     }()
-    var catchLabel: UILabel = {
+    
+    private let catchLabel: UILabel = {
         let label = UILabel()
         label.text = "none"
         label.textColor = .red
@@ -61,22 +51,38 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        print(catchButton.isUserInteractionEnabled)
         configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         view.backgroundColor = .white
+        configureSubViews()
+        configureConstratints()
+        configureTargets()
+    }
+    
+    private func configureSubViews() {
         view.addSubview(scanButton)
         view.addSubview(catchLabel)
+        dataScannerViewController.view.addSubview(catchButton)
+    }
+    
+    private func configureConstratints() {
         scanButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             scanButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             scanButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -30),
+        ])
+        
+        catchButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            catchButton.centerXAnchor.constraint(equalTo: dataScannerViewController.view.centerXAnchor),
+            catchButton.bottomAnchor.constraint(equalTo: dataScannerViewController.view.bottomAnchor, constant: -100),
+            catchButton.widthAnchor.constraint(equalToConstant: 110),
+            catchButton.heightAnchor.constraint(equalToConstant: 60)
         ])
         
         catchLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -87,24 +93,27 @@ class ViewController: UIViewController {
         ])
     }
     
-    @objc func startScanning() {
+    private func configureTargets() {
+        scanButton.addTarget(self, action: #selector(startScanning), for: .touchUpInside)
+        catchButton.addTarget(self, action: #selector(captureText), for: .touchUpInside)
+    }
+    
+    @objc private func startScanning() {
         if DataScannerViewController.isSupported && DataScannerViewController.isAvailable {
-            //            navigationController?.pushViewController(dataScannerController, animated: true)
-            present(dataScannerController, animated: true)
-            try? self.dataScannerController.startScanning()
+            present(dataScannerViewController, animated: true)
+            try? self.dataScannerViewController.startScanning()
         }
     }
     
-    @objc func captureText() {
+    @objc private func captureText() {
         guard let item = currentItems.first else { return } // recognizesMultipleItems 를 사용하지않기 떄문에 하나만 선택
         catchLabel.text = item.value
-        dataScannerController.dismiss(animated: true)
-        dataScannerController.stopScanning()
+        dataScannerViewController.dismiss(animated: true)
+        dataScannerViewController.stopScanning()
     }
 }
 
 extension ViewController: DataScannerViewControllerDelegate {
-    
     func dataScanner(_ dataScanner: DataScannerViewController, didAdd addedItems: [RecognizedItem], allItems: [RecognizedItem]) {
         for item in addedItems {
             switch item {
